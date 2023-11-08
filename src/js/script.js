@@ -55,12 +55,30 @@
         /* ...will stop the browser's default behavior (preventDefault) */
         event.preventDefault();
         /* will add the favorite class to the clicked element */
-        book.classList.add('favorite');
+        //book.classList.add('favorite');
         /* will get the book's ID from its data-id */
         const booksId = book.getAttribute('data-id');
         console.log('bookId:', booksId);
         /* and will add this ID to favoriteBooks */
-        favoriteBooks.push(booksId);
+        //favoriteBooks.push(booksId);
+        //console.log('favoriteBooks:', favoriteBooks);
+        const checkBooksClass = book.getAttribute('class');
+        console.log('checkBooksClass:', checkBooksClass);
+        
+        if(checkBooksClass != 'book__image favorite'){
+          /* will add the favorite class to the clicked element */
+          book.classList.add('favorite');
+          /* and will add this ID to favoriteBooks */
+          favoriteBooks.push(booksId);
+          console.log('favoriteBooks:', favoriteBooks);
+        } else {
+          /* will remove the favorite class to the clicked element */
+          book.classList.remove('favorite');
+          /* get the index of clicked element form favoriteBooks */
+          const booksIdIndex = favoriteBooks.indexOf(booksId);
+          /*remove index from favoriteBooks */
+          favoriteBooks.splice(booksIdIndex, 1);
+        }
         console.log('favoriteBooks:', favoriteBooks);
       });
     }
