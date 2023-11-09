@@ -45,26 +45,35 @@
 
   const initActions = function() {
 
-    /* Prepare a reference to the list of all .book__image elements in the .booksList */
-    const books = getElem.dom.booksList.querySelectorAll('li .book__image');
-    console.log('books:', books);
-    /**= go through each item on this list */
-    for(let book of books){
+    getElem.dom.booksList.addEventListener('dblclick', function(event){
+      event.preventDefault();
+      /* Prepare a reference to the list of all .book__image elements in the .booksList */
+      //const books = getElem.dom.booksList.querySelectorAll('li .book__image');
+      //console.log('books:', books);
+      /**= go through each item on this list */
+      //for(let book of books){
       /* For each of them, add a listener that, when detected, will trigger a function that... */
-      book.addEventListener('dblclick', function(event){
-        /* ...will stop the browser's default behavior (preventDefault) */
-        event.preventDefault();
-        /* will add the favorite class to the clicked element */
-        //book.classList.add('favorite');
-        /* will get the book's ID from its data-id */
-        const booksId = book.getAttribute('data-id');
-        console.log('bookId:', booksId);
-        /* and will add this ID to favoriteBooks */
-        //favoriteBooks.push(booksId);
-        //console.log('favoriteBooks:', favoriteBooks);
-        const checkBooksClass = book.getAttribute('class');
-        console.log('checkBooksClass:', checkBooksClass);
+      //book.addEventListener('dblclick', function(event){
+      /* ...will stop the browser's default behavior (preventDefault) */
+      //event.preventDefault();
+      /* will add the favorite class to the clicked element */
+      //book.classList.add('favorite');
+
+      /* make a reference to the DOM element link */
+      const clickedElement = event.target.offsetParent;
+      const book = clickedElement;
+      console.log('clickedElement:', clickedElement);
+      /* will get the book's ID from its data-id */
+      const booksId = book.getAttribute('data-id');
+      console.log('bookId:', booksId);
         
+      /* and will add this ID to favoriteBooks */
+      //favoriteBooks.push(booksId);
+      //console.log('favoriteBooks:', favoriteBooks);
+      const checkBooksClass = book.getAttribute('class');
+      console.log('checkBooksClass:', checkBooksClass);
+      /* whether the clicked element has the .book__image class? */
+      if(book.classList.contains('book__image')){
         if(checkBooksClass != 'book__image favorite'){
           /* will add the favorite class to the clicked element */
           book.classList.add('favorite');
@@ -80,10 +89,11 @@
           favoriteBooks.splice(booksIdIndex, 1);
         }
         console.log('favoriteBooks:', favoriteBooks);
-      });
-    }
-
+      }
+    });
   };
+
+  
 
   initActions();
 
