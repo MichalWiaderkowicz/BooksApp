@@ -10,9 +10,12 @@
 
   getElem.dom = {};
 
-  /* Prepare a reference to the template and the .books-list. */
+  /* Prepare a reference */
   getElem.dom.template = document.querySelector('#template-book');
   getElem.dom.booksList = document.querySelector('.books-list');
+  getElem.dom.formFilters = document.querySelector('.filters');
+
+  console.log('Filters:', getElem.dom.formFiltres);
 
   const template = Handlebars.compile(document.querySelector('#template-book').innerHTML);
   //console.log('template:', template);
@@ -41,7 +44,35 @@
 
   render(library);
 
+
   const favoriteBooks = [];
+
+  const filters = [];
+
+
+  const filterBooks = function() {
+    for(const book of dataSource.books) {
+      const informationAboutTheBook = book.details;
+      const idOfTheBook = book.id;
+      let shouldBeHidden = false;
+
+      for(filter of filters){
+        if(!informationAboutTheBook[filter]){
+          shouldBeHidden = true;
+          break;
+        }
+      }
+      const selectHiddenBook = '.book__image[data-id="'+ idOfTheBook +'"]';
+      const hiddenBook = getElem.dom.booksList.querySelector(selectHiddenBook);
+      if(shouldBeHidden== true) {
+        hiddenBook.classList.add('hidden');
+      } else {
+        hiddenBook.classList.remove('hidden');
+      }
+    }
+
+  };
+
 
   const initActions = function() {
 
@@ -91,6 +122,29 @@
         console.log('favoriteBooks:', favoriteBooks);
       }
     });
+
+    getElem.dom.formFilters.addEventListener('click', function(event){
+      const clickedElement = event.target;
+      /*!!!The tagName property returns the tag name in UPPERCASE!!! */
+      if(clickedElement.tagName == 'INPUT' && clickedElement.type == 'checkbox' && clickedElement.name == 'filter') {
+        /* check what the console shows after selecting the option */
+        const checkOption = clickedElement.value;
+        console.log('checkOption:', checkOption);
+        /* check if the selected option is true */
+        if(clickedElement.checked == true) {
+          /* add to filtres */
+          filters.push(checkOption);
+        } else {
+          /* get the index of clicked element */
+          const checkOptionIndex = filters. indexOf(checkOption);
+          /* remove this index from filters array */
+          filters.splice(checkOptionIndex, 1);
+        }
+        console.log('filters:', filters) ; 
+        filterBooks();
+      }
+    });
+
   };
 
   
