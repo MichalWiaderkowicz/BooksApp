@@ -23,11 +23,36 @@
   const library = dataSource.books;
   //console.log('library:', library);
 
+
+  const determineRatingBgc = function(rating) {
+    if(rating < 6) {
+      return 'linear-gradient(to bottom, #f15536 0%, #f1a936 100%)';
+    }
+    if(rating > 6 && rating <= 8) {
+      return 'linear-gradient(to bottom, #f1b936 0%, #eef136 100%)';
+    }
+    if(rating > 8 && rating <= 9) {
+      return 'linear-gradient(to bottom, #def136 0%, #c5f136 100%)';
+    }
+    if (rating > 9) {
+      return 'linear-gradient(to bottom, #b6f136 0%, #74f136 100%)';
+    }
+  };
+
   /* Add a new render function */
   const render = function(book) {
     /* START LOOP AND step through each item from dataSource.books */
     for(let data of book){ 
       //console.log('data', data);
+      const ratingBgc = determineRatingBgc(data.rating);
+      console.log('ratingBgc:', ratingBgc);
+
+      const ratingPercentage = data.rating * 10;
+      const ratingWidth = ratingPercentage.toString();
+      console.log('ratingWidth:', ratingWidth);
+
+      data.ratingBgc = ratingBgc;
+      data.ratingWidth = ratingWidth;
 
       /* generating HTML code based on the template and data about a specific book. */
       const generatedHTML = template(data);
