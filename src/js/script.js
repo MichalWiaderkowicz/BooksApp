@@ -6,12 +6,12 @@
     constructor(){
       const thisBookList = this;
 
-      this.bookList.initData();
-      this.bookList.getElements();
-      this.bookList.render(thisBookList.library);
-      this.bookList.initActions();
+      this.initData();
+      this.getElements();
+      this.initActions();
+      this.render(thisBookList.library);
+      
     }
-  
 
     initData(){
       const thisBookList = this;
